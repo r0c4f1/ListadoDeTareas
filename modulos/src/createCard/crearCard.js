@@ -1,18 +1,22 @@
+"use strict";
+
+const create = (element) => document.createElement(element);
+
 function createCard(container = document, text) {
   //Creation
-  const card = document.createElement("div"),
-    cardFirst = document.createElement("div"),
-    cardSecond = document.createElement("div"),
-    cardTask = document.createElement("div"),
-    cardTaskTitle = document.createElement("h3"),
-    cardTaskParagraph = document.createElement("p"),
-    cardProgress = document.createElement("div"),
-    cardDelete = document.createElement("div"),
-    cardProgressTitle = document.createElement("h3"),
-    cardProgressIcons = document.createElement("div"),
-    cardIconDisLike = document.createElement("img"),
-    cardIconLike = document.createElement("img"),
-    cardDeleteButton = document.createElement("button");
+  const card = create("div"),
+    cardFirst = create("div"),
+    cardSecond = create("div"),
+    cardTask = create("div"),
+    cardTaskTitle = create("h3"),
+    cardTaskParagraph = create("p"),
+    cardProgress = create("div"),
+    cardDelete = create("div"),
+    cardProgressTitle = create("h3"),
+    cardProgressIcons = create("div"),
+    cardIconDisLike = create("img"),
+    cardIconLike = create("img"),
+    buttons = create("button");
   /////////////
 
   //Integrate classes
@@ -32,7 +36,7 @@ function createCard(container = document, text) {
   cardProgressIcons.classList.add("card__progress__icons");
   cardIconDisLike.classList.add("card__icon__dislike");
   cardIconLike.classList.add("card__icon__like");
-  cardDeleteButton.classList.add("card__delete__button");
+  buttons.classList.add("buttons");
   //////////////
 
   //Insert Id
@@ -49,7 +53,7 @@ function createCard(container = document, text) {
     cardTaskParagraph.setAttribute("contenteditable", false)
   );
 
-  cardDeleteButton.addEventListener("click", () => {
+  buttons.addEventListener("click", () => {
     deleteCard(container, card.dataset.id);
   });
   //////////////
@@ -63,7 +67,7 @@ function createCard(container = document, text) {
     "modulos/public/styles/icons/bx-dislike.svg"
   );
   cardIconLike.setAttribute("src", "modulos/public/styles/icons/bx-like.svg");
-  cardDeleteButton.textContent = "Eliminar Tarea";
+  buttons.textContent = "Eliminar Tarea";
   //////////////
 
   //Insert in Container
@@ -74,7 +78,7 @@ function createCard(container = document, text) {
   cardProgress.appendChild(cardProgressIcons);
   cardProgressIcons.appendChild(cardIconLike);
   cardProgressIcons.appendChild(cardIconDisLike);
-  cardDelete.appendChild(cardDeleteButton);
+  cardDelete.appendChild(buttons);
   cardSecond.appendChild(cardProgress);
   cardSecond.appendChild(cardDelete);
   card.appendChild(cardFirst);
@@ -90,4 +94,4 @@ function deleteCard(container = document, id) {
       container.removeChild(containerChild.item(i));
 }
 
-export { createCard, deleteCard };
+export { createCard };
