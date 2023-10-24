@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="Pagina de listado de tareas" />
+    <meta
+      name="keywords"
+      content="tareas, listado, prueba, practica, html, css, javascript"
+    />
+    <meta name="author" content="Roberto Ducharne" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c&family=Open+Sans:ital,wght@0,400;0,600;1,700&family=Plus+Jakarta+Sans:wght@200&family=Poppins:wght@200&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="modulos/public/styles/style.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <header class="header">
+      <h1 class="header__title">Listado De Tareas Pendientes Y Por Haber.</h1>
+      <button id="e">insertar</button>
+    </header>
+
+    <main class="main">
+      <div class="main__container">
+        <div
+          class="card"
+          title="Puede Editar Esta Tarea Dandole Doble Click Al Parrafo"
+        >
+          <div class="card__first">
+            <div class="card__task">
+              <h3>Tarea:</h3>
+              <p class="card__task__paragraph">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore
+                optio, fuga error itaque nobis quod fugiat ullam architecto
+                impedit distinctio vel repudiandae provident dolorum
+                repellendus? Dicta incidunt architecto nesciunt corporis.
+              </p>
+            </div>
+          </div>
+          <div class="card__second">
+            <div class="card__progress">
+              <h3 class="card__progress__title">Tarea Realizada</h3>
+              <div class="card__progress__icons">
+                <img
+                  class="card__icon__like"
+                  src="modulos/public/styles/icons/bx-like.svg"
+                  alt=""
+                />
+                <img
+                  class="card__icon__dislike"
+                  src="modulos/public/styles/icons/bx-dislike.svg"
+                  alt=""
+                />
+              </div>
+            </div>
+            <div class="card__delete">
+              <button class="card__delete__button">Elminar Tarea</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card__first">
+            <div class="card__task">
+              <h3>Tarea:</h3>
+              <p class="card__task__paragraph">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore
+                optio, fuga error itaque nobis quod fugiat ullam architecto
+                impedit distinctio vel repudiandae provident dolorum
+                repellendus? Dicta incidunt architecto nesciunt corporis.
+              </p>
+            </div>
+          </div>
+          <div class="card__second">
+            <div class="card__progress">
+              <h3 class="card__progress__title">Tarea Realizada</h3>
+              <div class="card__progress__icons">
+                <img
+                  class="card__icon__like"
+                  src="modulos/public/styles/icons/bx-like.svg"
+                  alt=""
+                />
+                <img
+                  class="card__icon__dislike"
+                  src="modulos/public/styles/icons/bx-dislike.svg"
+                  alt=""
+                />
+              </div>
+            </div>
+            <div class="card__delete">
+              <button class="card__delete__button">Elminar Tarea</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script src="modulos/public/bundle.js"></script>
+  </body>
+</html>

@@ -1,0 +1,132 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "M PLUS Rounded 1c", sans-serif;
+  font-family: "Open Sans", sans-serif;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-family: "Poppins", sans-serif;
+}
+
+:root {
+  --primary-color: #c5e0ff;
+  --border-color: #516b8a;
+  --icon--like: #bce2c1;
+  --icon--dislike: #e2bcbc;
+}
+
+.header {
+  width: 85%;
+  margin: 30px auto;
+  background-color: var(--primary-color);
+}
+
+.header__title {
+  padding: 20px;
+  text-align: center;
+}
+
+.main {
+  width: 100%;
+  height: max-content;
+}
+
+.main__container {
+  width: 80%;
+  margin: auto;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 20px;
+}
+
+.card {
+  flex-grow: 1;
+  margin: 20px;
+  width: 300px;
+  height: max-content;
+  border: 2px solid var(--border-color);
+  min-width: 200px;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.card__second {
+  display: flex;
+  justify-content: space-around;
+}
+
+.card__progress {
+  width: 50%;
+  padding: 10px;
+}
+
+.card__delete {
+  width: 50%;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card__progress__title {
+  text-align: center;
+  width: 100%;
+  border-bottom: 1px solid var(--border-color);
+  margin-bottom: 10px;
+}
+
+.card__progress__icons {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.card__progress__icons img {
+  cursor: pointer;
+  border-radius: 50%;
+  padding: 5px;
+}
+
+.card__delete__button {
+  background-color: var(--primary-color);
+  border: none;
+  padding: 10px;
+  font-size: 16px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.card__icon__like {
+  background-color: var(--icon--like);
+}
+
+.card__icon__dislike {
+  background-color: var(--icon--dislike);
+}
+
+.card__task {
+  padding: 10px;
+}
+
+@media (max-width: 470px) {
+  .header {
+    width: 100%;
+  }
+
+  .header__title {
+    font-size: 23px;
+  }
+
+  .main__container {
+    width: 100%;
+  }
+
+  .card {
+    width: 100%;
+    border: none;
+    border-radius: 0;
+    border-top: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
+  }
+}
