@@ -85,12 +85,13 @@
   margin: 20px;
   width: 300px;
   height: max-content;
-  border: 2px solid var(--border-color);
+  border: 1px solid var(--border-color);
   min-width: 200px;
-  border-radius: 20px;
+  border-radius: 10px;
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  transition: background-color 1s;
 }
 
 .card__second {
@@ -132,7 +133,7 @@
 .buttons {
   background-color: var(--primary-color);
   border: none;
-  padding: 10px;
+  padding: 8px;
   font-size: 16px;
   font-weight: 800;
   cursor: pointer;
@@ -144,6 +145,14 @@
 
 .card__icon__dislike {
   background-color: var(--icon--dislike);
+}
+
+.animation__dislike {
+  animation: dislike 1s;
+}
+
+.animation__like {
+  animation: like 1s;
 }
 
 .card__task {
@@ -198,5 +207,31 @@
     border-radius: 0;
     border-top: 1px solid var(--border-color);
     border-bottom: 1px solid var(--border-color);
+  }
+}
+
+@keyframes dislike {
+  0% {
+    transform: rotate(0);
+  }
+  50% {
+    transform: rotate(40deg);
+    transform-origin: center bottom;
+  }
+  100% {
+    transform: rotate(0);
+  }
+}
+
+@keyframes like {
+  0% {
+    transform: rotate(0);
+  }
+  50% {
+    transform: rotate(-40deg);
+    transform-origin: center bottom;
+  }
+  100% {
+    transform: rotate(0);
   }
 }

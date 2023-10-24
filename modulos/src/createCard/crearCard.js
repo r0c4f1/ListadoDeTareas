@@ -1,8 +1,11 @@
 "use strict";
+import Storage from "../localStorage/localStorage";
+const storage = new Storage();
 
 const create = (element) => document.createElement(element);
 
-function createCard(container = document, text) {
+function createCard(container = document, text = "", keyParam) {
+  let key = text === "" ? "" : storage.insert(text);
   //Creation
   const card = create("div"),
     cardFirst = create("div"),
@@ -39,8 +42,12 @@ function createCard(container = document, text) {
   buttons.classList.add("buttons");
   //////////////
 
+  //Style Card
+  card.style.backgroundColor = storage.getInfo(key || keyParam).done;
+  /////////////
+
   //Insert Id
-  card.dataset.id = 1;
+  card.dataset.id = key || keyParam;
   /////////////
 
   //Add Event
@@ -49,19 +56,40 @@ function createCard(container = document, text) {
     cardTaskParagraph.setAttribute("contenteditable", true)
   );
 
-  cardTaskParagraph.addEventListener("focusout", () =>
-    cardTaskParagraph.setAttribute("contenteditable", false)
-  );
+  cardTaskParagraph.addEventListener("focusout", () => {
+    cardTaskParagraph.setAttribute("contenteditable", false);
+    storage.updateParagraph(card.dataset.id, cardTaskParagraph.textContent);
+  });
 
   buttons.addEventListener("click", () => {
     deleteCard(container, card.dataset.id);
   });
+
+  cardIconLike.addEventListener("click", () => {
+    cardIconLike.classList.add("animation__like");
+    setTimeout(() => cardIconLike.classList.remove("animation__like"), 900);
+    cardProgressTitle.textContent = "Tarea Realizada";
+    card.style.backgroundColor = "#bce2c1";
+    storage.updateStatus(card.dataset.id, "#bce2c1", cardProgress.textContent);
+  });
+
+  cardIconDisLike.addEventListener("click", () => {
+    cardIconDisLike.classList.add("animation__dislike");
+    setTimeout(
+      () => cardIconDisLike.classList.remove("animation__dislike"),
+      900
+    );
+    cardProgressTitle.textContent = "Tarea No Realizada";
+    card.style.backgroundColor = "#e2bcbc";
+    storage.updateStatus(card.dataset.id, "#e2bcbc", cardProgress.textContent);
+  });
+
   //////////////
 
   //Insert Info
   cardTaskTitle.textContent = "Tarea";
-  cardTaskParagraph.textContent = text;
-  cardProgressTitle.textContent = "Tarea Realizada";
+  cardTaskParagraph.textContent = storage.getInfo(key || keyParam).text;
+  cardProgressTitle.textContent = storage.getInfo(key || keyParam).textDone;
   cardIconDisLike.setAttribute(
     "src",
     "modulos/public/styles/icons/bx-dislike.svg"
@@ -92,6 +120,12 @@ function deleteCard(container = document, id) {
   for (let i = 0; i < containerChild.length; i++)
     if (containerChild.item(i).dataset.id === id)
       container.removeChild(containerChild.item(i));
+
+  storage.delete(id);
 }
+
+addEventListener("DOMContentLoaded", () => {
+  storage.getAllCards(createCard);
+});
 
 export { createCard };

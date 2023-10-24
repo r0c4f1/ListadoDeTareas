@@ -1,13 +1,64 @@
 'use strict';
 
-const data = document.querySelector(".card__task__paragraph");
-const mainContainer = document.querySelector(".main__container");
-const mainInsertButton = document.querySelector(".main__insert__button");
-const mainInsertTextarea = document.querySelector(".main__insert__textarea");
+const data = document.querySelector(".card__task__paragraph"),
+  mainContainer = document.querySelector(".main__container"),
+  mainInsertButton = document.querySelector(".main__insert__button"),
+  mainInsertTextarea = document.querySelector(".main__insert__textarea");
+
+class Storage {
+  #count = 1;
+
+  constructor() {}
+
+  insert(text, done = "#e2bcbc", textDone = "Tarea No Realizada") {
+    let obj = {
+      text,
+      done,
+      textDone,
+    };
+    let key = this.#count + localStorage.length;
+    localStorage.setItem(key, JSON.stringify(obj));
+
+    return key;
+  }
+
+  getInfo(key) {
+    let { text, done, textDone } = JSON.parse(localStorage.getItem(key));
+
+    return {
+      text,
+      done,
+      textDone,
+    };
+  }
+
+  getAllCards(create) {
+    for (let i = 0; i < localStorage.length; i++)
+      create(mainContainer, "", localStorage.key(i));
+  }
+
+  updateParagraph(id, data) {
+    let obj = JSON.parse(localStorage.getItem(id));
+    obj.text = data;
+    localStorage.setItem(id, JSON.stringify(obj));
+  }
+
+  updateStatus(id, data, textDone) {
+    let obj = JSON.parse(localStorage.getItem(id));
+    obj.done = data;
+    obj.textDone = textDone;
+    localStorage.setItem(id, JSON.stringify(obj));
+  }
+
+  delete = (id) => localStorage.removeItem(id);
+}
+
+const storage = new Storage();
 
 const create = (element) => document.createElement(element);
 
-function createCard(container = document, text) {
+function createCard(container = document, text = "", keyParam) {
+  let key = text === "" ? "" : storage.insert(text);
   //Creation
   const card = create("div"),
     cardFirst = create("div"),
@@ -44,8 +95,12 @@ function createCard(container = document, text) {
   buttons.classList.add("buttons");
   //////////////
 
+  //Style Card
+  card.style.backgroundColor = storage.getInfo(key || keyParam).done;
+  /////////////
+
   //Insert Id
-  card.dataset.id = 1;
+  card.dataset.id = key || keyParam;
   /////////////
 
   //Add Event
@@ -54,19 +109,40 @@ function createCard(container = document, text) {
     cardTaskParagraph.setAttribute("contenteditable", true)
   );
 
-  cardTaskParagraph.addEventListener("focusout", () =>
-    cardTaskParagraph.setAttribute("contenteditable", false)
-  );
+  cardTaskParagraph.addEventListener("focusout", () => {
+    cardTaskParagraph.setAttribute("contenteditable", false);
+    storage.updateParagraph(card.dataset.id, cardTaskParagraph.textContent);
+  });
 
   buttons.addEventListener("click", () => {
     deleteCard(container, card.dataset.id);
   });
+
+  cardIconLike.addEventListener("click", () => {
+    cardIconLike.classList.add("animation__like");
+    setTimeout(() => cardIconLike.classList.remove("animation__like"), 900);
+    cardProgressTitle.textContent = "Tarea Realizada";
+    card.style.backgroundColor = "#bce2c1";
+    storage.updateStatus(card.dataset.id, "#bce2c1", cardProgress.textContent);
+  });
+
+  cardIconDisLike.addEventListener("click", () => {
+    cardIconDisLike.classList.add("animation__dislike");
+    setTimeout(
+      () => cardIconDisLike.classList.remove("animation__dislike"),
+      900
+    );
+    cardProgressTitle.textContent = "Tarea No Realizada";
+    card.style.backgroundColor = "#e2bcbc";
+    storage.updateStatus(card.dataset.id, "#e2bcbc", cardProgress.textContent);
+  });
+
   //////////////
 
   //Insert Info
   cardTaskTitle.textContent = "Tarea";
-  cardTaskParagraph.textContent = text;
-  cardProgressTitle.textContent = "Tarea Realizada";
+  cardTaskParagraph.textContent = storage.getInfo(key || keyParam).text;
+  cardProgressTitle.textContent = storage.getInfo(key || keyParam).textDone;
   cardIconDisLike.setAttribute(
     "src",
     "modulos/public/styles/icons/bx-dislike.svg"
@@ -97,7 +173,13 @@ function deleteCard(container = document, id) {
   for (let i = 0; i < containerChild.length; i++)
     if (containerChild.item(i).dataset.id === id)
       container.removeChild(containerChild.item(i));
+
+  storage.delete(id);
 }
+
+addEventListener("DOMContentLoaded", () => {
+  storage.getAllCards(createCard);
+});
 
 const insertTask = () => {
   let value = mainInsertTextarea.value.trim();
@@ -111,10 +193,12 @@ mainInsertTextarea.addEventListener("keyup", (e) =>
   e.keyCode === 13 ? insertTask() : ""
 );
 
-data.addEventListener("click", () => {
-  data.setAttribute("contenteditable", true);
-});
+if (data) {
+  data.addEventListener("click", () =>
+    data.setAttribute("contenteditable", true)
+  );
 
-data.addEventListener("focusout", () => {
-  data.setAttribute("contenteditable", false);
-});
+  data.addEventListener("focusout", () =>
+    data.setAttribute("contenteditable", false)
+  );
+}

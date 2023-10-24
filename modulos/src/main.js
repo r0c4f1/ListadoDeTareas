@@ -18,10 +18,12 @@ mainInsertTextarea.addEventListener("keyup", (e) =>
   e.keyCode === 13 ? insertTask() : ""
 );
 
-data.addEventListener("click", () => {
-  data.setAttribute("contenteditable", true);
-});
+if (data) {
+  data.addEventListener("click", () =>
+    data.setAttribute("contenteditable", true)
+  );
 
-data.addEventListener("focusout", () => {
-  data.setAttribute("contenteditable", false);
-});
+  data.addEventListener("focusout", () =>
+    data.setAttribute("contenteditable", false)
+  );
+}
