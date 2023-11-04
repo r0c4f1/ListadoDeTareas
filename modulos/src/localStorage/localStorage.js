@@ -1,51 +1,48 @@
-import { mainContainer, data } from "../variables/variables";
+import { mainContainer } from '../variables/variables'
 
 class Storage {
-  #count = 1;
+  #count = 1
 
-  constructor() {}
-
-  insert(text, done = "#e2bcbc", textDone = "Tarea No Realizada") {
-    let obj = {
+  insert (text, done = '#e2bcbc', textDone = 'Tarea No Realizada') {
+    const obj = {
       text,
       done,
-      textDone,
-    };
-    let key = this.#count + localStorage.length;
-    localStorage.setItem(key, JSON.stringify(obj));
+      textDone
+    }
+    const key = this.#count + window.localStorage.length
+    window.localStorage.setItem(key, JSON.stringify(obj))
 
-    return key;
+    return key
   }
 
-  getInfo(key) {
-    let { text, done, textDone } = JSON.parse(localStorage.getItem(key));
+  getInfo (key) {
+    const { text, done, textDone } = JSON.parse(window.localStorage.getItem(key))
 
     return {
       text,
       done,
-      textDone,
-    };
+      textDone
+    }
   }
 
-  getAllCards(create) {
-    for (let i = 0; i < localStorage.length; i++)
-      create(mainContainer, "", localStorage.key(i));
+  getAllCards (create) {
+    for (let i = 0; i < window.localStorage.length; i++) { create(mainContainer, '', window.localStorage.key(i)) }
   }
 
-  updateParagraph(id, data) {
-    let obj = JSON.parse(localStorage.getItem(id));
-    obj.text = data;
-    localStorage.setItem(id, JSON.stringify(obj));
+  updateParagraph (id, data) {
+    const obj = JSON.parse(window.localStorage.getItem(id))
+    obj.text = data
+    window.localStorage.setItem(id, JSON.stringify(obj))
   }
 
-  updateStatus(id, data, textDone) {
-    let obj = JSON.parse(localStorage.getItem(id));
-    obj.done = data;
-    obj.textDone = textDone;
-    localStorage.setItem(id, JSON.stringify(obj));
+  updateStatus (id, data, textDone) {
+    const obj = JSON.parse(window.localStorage.getItem(id))
+    obj.done = data
+    obj.textDone = textDone
+    window.localStorage.setItem(id, JSON.stringify(obj))
   }
 
-  delete = (id) => localStorage.removeItem(id);
+  delete = (id) => window.localStorage.removeItem(id)
 }
 
-export default Storage;
+export default Storage

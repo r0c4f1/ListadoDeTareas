@@ -12,6 +12,10 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "rollup": "4.1.4"
+    "rollup": "4.1.4",
+    "standard": "^17.1.0"
+  },
+  "eslintConfig": {
+    "extends": "./node_modules/standard/eslintrc.json"
   }
 }
